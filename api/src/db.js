@@ -33,8 +33,8 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { Dogs, Temperaments } = sequelize.models;
 
 // Aca vendrian las relaciones
-//Dog.belongsToMany(Temperaments, {through: 'DogsTemperaments'});
-//Temperament.belongsToMany(Dogs, {through: 'DogsTemperaments'});
+Dogs.belongsToMany(Temperaments, {through: 'Dogs_Temperaments'});
+Temperaments.belongsToMany(Dogs, {through: 'Dogs_Temperaments'});
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
@@ -42,10 +42,11 @@ module.exports = {
 };
 
 //console.log que utilizo para saber que tengo conectado correctamente la base de datos
-sequelize.authenticate()
-  .then(() => {
-    console.log('Conexión establecida correctamente.');
-  })
-  .catch(err => {
-    console.error('Error al conectar a la base de datos:', err);
-  });
+
+// sequelize.authenticate()
+//   .then(() => {
+//     console.log('Conexión establecida correctamente.');
+//   })
+//   .catch(err => {
+//     console.error('Error al conectar a la base de datos:', err);
+//   });

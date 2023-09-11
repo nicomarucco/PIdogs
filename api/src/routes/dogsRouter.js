@@ -1,10 +1,11 @@
 const { Router } = require('express');
-const { createDogHandler, getDogsHandler, dogIdHandler} = require("../handlers/dogsHandler");
+const { createDogHandler, getDogsHandler, dogIdHandler, dogNameHandler} = require("../handlers/dogsHandler");
 const dogsRouter = Router();
 
 dogsRouter
+    .get('/id', dogIdHandler)
+    .get('/name', dogNameHandler)
     .get('/', getDogsHandler)
-    .get('/:id', dogIdHandler)
     .post('/', createDogHandler)
 ;
 

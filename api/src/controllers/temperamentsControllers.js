@@ -1,8 +1,8 @@
-const { Temperament } = require('../db');
+const { Temperaments } = require('../db');
 const axios = require('axios');
 
 const getTemperaments = async () => {
-    const temperamentsDb = await Temperament.findAll();
+    const temperamentsDb = await Temperaments.findAll();
     if (!temperamentsDb.length) {
         const { data } = await axios.get('https://api.thedogapi.com/v1/breeds');
         let temperamentsApi = [];
@@ -14,11 +14,11 @@ const getTemperaments = async () => {
         let separatedTemperaments = temperamentsApi.flatMap((e) => e.split(', '));
         let uniqueTemperaments = [...new Set(separatedTemperaments)];
         uniqueTemperaments.forEach(async e => {
-            await Temperament.findOrCreate({where:{ name: e}});
+            await Temperaments.findOrCreate({where:{ name: e}});
         });
         return uniqueTemperaments;
     };
-    return temperamentsDb;
+    return temperamentsDb.map(e => e.name);
 };
 
 module.exports = { getTemperaments };
